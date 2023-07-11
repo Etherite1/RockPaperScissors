@@ -4,27 +4,93 @@ function getComputerChoice()
     return choices[Math.floor(Math.random() * 3)];
 }
 
-function playRound(playerSelection, computerSelection)
+function playRound(input, computer)
 {
-    var playerSelection = playerSelection[0].toUpperCase() + playerSelection.toLowerCase().slice(1, );
-    var computerSelection = computerSelection[0].toUpperCase() + computerSelection.toLowerCase().slice(1, );
-    var playerWin = "You win! " + playerSelection + " beats " + computerSelection + ".";
-    var computerWin = "You lose :( " + computerSelection + " beats " + playerSelection + ".";
-    if(playerSelection == computerSelection) return "It's a tie!"
-    else if(playerSelection == 'Rock' && computerSelection == 'Scissors') return playerWin;
-    else if(playerSelection == 'Scissors' && computerSelection == 'Rock') return computerWin;
-    else if(playerSelection == 'Rock' && computerSelection == 'Paper') return computerWin;
-    else if(playerSelection == 'Paper' && computerSelection == 'Rock') return playerWin;
-    else if(playerSelection == 'Paper' && computerSelection == 'Scissors') return computerWin;
-    else if(playerSelection == 'Scissors' && computerSelection == 'Paper') return playerWin;
+    var playerWins = 1;
+    if(input.toUpperCase() == computer.toUpperCase()) playerWins = 0;
+    else if(input == 'rock' && computer == 'Paper') playerWins = -1;
+    else if(input == 'paper' && computer == 'Scissors') playerWins = -1;
+    else if(input == 'scissors' && computer == 'Rock') playerWins = -1;
+    console.log(input + " " + computer + " " + playerWins);
+    return playerWins;
 }
 
-function game()
+function capitalize(s)
 {
-    var playerWin = 0;
-    var computerWin = 0;
-    for(let i = 0; i < 5; i++)
-    {
-        var 
-    }
+    return s[0].toUpperCase() + s.slice(1);
 }
+
+const btn = document.querySelector("#btnContainer");
+const player = document.querySelector(".player");
+const computer = document.querySelector(".computer");
+const indiv_games = document.querySelector("#indiv-games")
+const printWinner = document.querySelector("#printWinner")
+player.textContent = 0
+computer.textContent = 0
+
+var playerWins = 0, computerWins = 0;
+
+btn.addEventListener("click", function (e) {
+    playerChoice = e.target['id'];
+    if(playerChoice == 'newGame')
+    {
+        playerWins = 0;
+        computerWins = 0;
+        player.textContent = 0;
+        computer.textContent = 0;
+        indiv_games.innerHTML = "";
+        printWinner.innerHTML = "";
+        player.classList.remove("winner");
+        player.classList.remove("loser");
+        computer.classList.remove("winner");
+        computer.classList.remove("loser");
+        printWinner.classList.remove("winner");
+        printWinner.classList.remove("loser");
+    }
+    else
+    {
+        if(playerWins == 5 || computerWins == 5) return;
+        computerChoice = getComputerChoice();
+        var winner = playRound(playerChoice, computerChoice);
+        const winmsg = document.createElement("p");
+        if(winner == 1) 
+        {
+            playerWins++;
+            winmsg.textContent += "You win! " + capitalize(playerChoice) + " beats " + computerChoice + ".";
+        }
+        else if(winner == -1) 
+        {
+            computerWins++;
+            winmsg.textContent += "You lose :( " + capitalize(playerChoice) + " loses to " + computerChoice + ".";
+        }
+        else
+        {
+            winmsg.textContent += "It's a draw. " + capitalize(playerChoice) + " draws against " + computerChoice + ".";
+        }
+        indiv_games.appendChild(winmsg);
+        player.textContent = playerWins;
+        computer.textContent = computerWins;
+        if(playerWins == 5) {
+            player.classList.add("winner");
+            computer.classList.add("loser");
+            printWinner.classList.add("winner");
+            printWinner.textContent = "Congratulations, you won!";
+        }
+        else if(computerWins == 5) {
+            computer.classList.add("winner");
+            player.classList.add("loser");
+            printWinner.classList.add("loser");
+            printWinner.textContent = "Sorry, you lost, better luck next time :(";
+        }
+    }
+});
+
+
+// const rockButton = document.querySelector("#rock");
+// const scissorsButton = document.querySelector("#scissors");
+// const paperButton = document.querySelector("#paper");
+
+// rockButton.addEventListener('click', playRound("Rock"));
+// scissorsButton.addEventListener('click', playRound("Scissors"));
+// paperButton.addEventListener('click', playRound("Paper"));
+

@@ -2,5 +2,25 @@
 <html lang = "en">
     <head>
         <script src = "game.js" defer></script>
+        <title>Rock Paper Scissors!</title>
+        <link rel = 'stylesheet' href = 'style.css' />
     </head>
+    <body>
+        <div id = 'wrapper'>
+            <h1>Rock, Paper, Scissors game</h1>
+            <div id = 'scorer'>
+                <p><span class = 'player'></span> vs <span class = 'computer'></span></p>
+                <p id = 'printWinner'></p>
+            </div>
+            <div id = 'btnContainer'>
+                <button id = 'rock' class = 'playButtons'>Rock</button>
+                <button id = 'paper' class = 'playButtons'>Paper</button>
+                <button id = 'scissors' class = 'playButtons'>Scissors</button>
+                <button id = 'newGame' class = 'newGameButton'>New Game</button>
+            </div>
+            <div id = 'indiv-games'></div>
+        </div>
+
+        
+    </body>
 </html>
